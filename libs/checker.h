@@ -6,4 +6,4 @@ void CheckHelpCommand(int argc, char* help);
 
 void CheckCountOfCommands(int argc);
 
-void CheckFile(const Arguments &arguments);
+void CheckFile(char const* filename);

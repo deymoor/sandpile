@@ -1,5 +1,6 @@
 #include "utils.h"
 #include <cstring>
+#include <iostream>
 
 
 void CheckNextArgument(int index, int argc) {
@@ -8,7 +9,6 @@ void CheckNextArgument(int index, int argc) {
 	}
 }
 
-
 void CheckHelpCommand(int argc, char* help) {
     if (argc == 2 && strcmp(help, "--help") == 0) {
         PrintCommands();
@@ -16,16 +16,14 @@ void CheckHelpCommand(int argc, char* help) {
     }
 }
 
-
 void CheckCountOfCommands(int argc){
     if (argc == 1) {
         ThrowError("Write any commands!\nPlease write --help to know all commands!");
     }
 }
 
-
-void CheckFile(const Arguments &arguments){
-    if (!arguments.filename) {
-        ThrowError("You didn't write the name of the file!");
+void CheckFile(char const* filename){
+    if (filename == nullptr) {
+        ThrowError("You didn't write the name of the input file!");
     }
 }

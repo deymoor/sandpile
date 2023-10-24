@@ -10,9 +10,9 @@ void ThrowError(const char* error_message){
 void PrintCommands(){
     std::cout << "--------------------------------------\n";
     std::cout << "You can use this commands:\n";
-    std::cout << "Use -l {number} or --lines={number} to set the count of the printed lines\n";
-    std::cout << "Use -t or --tail to print lines from the end\n";
-    std::cout << "Use -d {special character} or --delimiter={special_character} to set delimiter of lines\n";
-    std::cout << "You can also write name of your file. But in the beginning of the name you can't use '-'\n";
+    std::cout << "Use -m {number} or --max_iter={number} to set the maximum quantity of iterations\n";
+    std::cout << "Use -i {filename} or --input={filename} to write name of the file\n";
+    std::cout << "Use -o {directory} or --output={directory} to set directory, where your images will be saved\n";
+    std::cout << "Use -f {number} or --freq={number} to set frequency of saving images\n";
     std::cout << "--------------------------------------\n";
 }
