@@ -30,8 +30,6 @@ struct Arguments {
     }
 };
 
-void ParseNumber(const char* str, uint64_t& number, uint8_t start);
-
 void HandlerLimitCmd(Arguments& arguments, uint8_t& index_cmd, int argc, char* argv[]);
 
 void HandlerFreqCmd(Arguments& arguments, uint8_t& index_cmd, int argc, char* argv[]);

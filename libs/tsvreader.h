@@ -1,3 +1,3 @@
 #pragma once
 
-void function();
+void ReadTsv(const char* filename);

@@ -1,5 +1,13 @@
-#include <iostream>
+#include "utils.h"
+#include "tsvreader.h"
+#include <fstream>
 
-void function() {
-	std::cout << "Hello from readtsv" << std::endl;
+void ReadTsv(const char* filename) {
+    std::ifstream input(filename);
+    if (!input) {
+        ThrowError("Incorrect input file name!");
+    }
+    while (input) {
+
+    }
 }

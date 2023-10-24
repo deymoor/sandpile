@@ -5,17 +5,6 @@
 #include <cstring>
 
 
-void ParseNumber(const char* str, uint64_t& number, uint8_t start) {
-	char* end;
-	number = std::strtoull(str + start, &end, 10);
-	if (end != (str + std::strlen(str))) {
-		ThrowError("You must to write integer numbers!");
-	}
-    if (errno == ERANGE) {
-        ThrowError("The number is greater than maximum of uint64_t");
-    }
-}
-
 void HandlerLimitCmd(Arguments& arguments, uint8_t& index_cmd, int argc, char* argv[]) {
 	char* cmd = argv[index_cmd];
 	uint64_t number;

@@ -1,11 +1,19 @@
 #include <libs/argparser.h>
+#include <libs/tsvreader.h>
 #include <iostream>
 
-// как будто песчинки хочется на связном списке написать
 
 void DoesItWork(Arguments &arguments) {
-    std::cout << arguments.filename << '\n';
-    std::cout << arguments.dir << '\n';
+    if (arguments.filename != nullptr) {
+        std::cout << arguments.filename << '\n';
+    } else {
+        std::cout << "file name is empty\n";
+    }
+    if (arguments.dir != nullptr) {
+        std::cout << arguments.dir << '\n';
+    } else {
+        std::cout << "dir is empty\n";
+    }
     std::cout << arguments.limit << '\n';
     std::cout << arguments.freq << '\n';
 }
@@ -15,9 +23,9 @@ int main(int argc, char* argv[]) {
 	Arguments arguments;
 	Parser(arguments, argc, argv);
     DoesItWork(arguments);
-	// tsv-format:	x	y	num
-	// readtsv(&struct)
+    ReadTsv(arguments.filename);
+	// readtsv(&struct)j
 	// iterfunc -> savebmp
-    arguments.Destructor();
+    //arguments.Destructor();
 	return 0;
 }
