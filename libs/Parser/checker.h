@@ -1,4 +1,8 @@
 #pragma once
+#include "../utils.h"
+#include <cstring>
+#include <iostream>
+
 
 void CheckNextArgument(int index, int argc);
 

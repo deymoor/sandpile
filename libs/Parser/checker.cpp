@@ -1,6 +1,4 @@
-#include "utils.h"
-#include <cstring>
-#include <iostream>
+#include "checker.h"
 
 
 void CheckNextArgument(int index, int argc) {
