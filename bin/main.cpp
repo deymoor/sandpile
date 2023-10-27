@@ -3,6 +3,7 @@
 #include "libs/Parser/argparser.h"
 #include "libs/TsvReader/tsvreader.h"
 #include "libs/SaveBmp/SaveBmp.h"
+#include "libs/IterSandPile/itersandpile.h"
 #include <iostream>
 
 
@@ -21,30 +22,26 @@ void DoesItWork(Arguments &arguments) {
     std::cout << arguments.freq << '\n';
 }
 
-void DoesReadWork(Field& field) {
-    for (size_t i = 0; i < field.x_array.size(); ++i) {
-        std::cout << field.x_array[i] << ' ';
-    }
-    std::cout << '\n';
-    for (size_t i = 0; i < field.y_array.size(); ++i) {
-        std::cout << field.y_array[i] << ' ';
-    }
-    std::cout << '\n';
-    for (size_t i = 0; i < field.grain_array.size(); ++i) {
-        std::cout << field.grain_array[i] << ' ';
+void PrintSandPile(Field* field) {
+    for (int i = 0; i < field->border_y; ++i) {
+        for (int j = 0; j < field->border_x; ++j) {
+            std::cout << field->sand_pile[i][j] << ' ';
+        }
+        std::cout << '\n';
     }
 }
 
+// разобраться с утечкой памяти на стеке и popback соответственно
 int main(int argc, char* argv[]) {
-    //SaveBmp();
 	std::cout << "Hello from labwork3" << std::endl;
 	Arguments arguments;
-    Field field;
+    auto field = new Field();
 	Parser(arguments, argc, argv);
     DoesItWork(arguments);
     ReadTsv(arguments.filename, field);
-    DoesReadWork(field);
+    IterSandPile(field, arguments);
 	// iterfunc -> savebmp
     //arguments.Destructor();
+    delete field;
 	return 0;
 }
