@@ -29,7 +29,10 @@ Triple* Stack::PopBack() {
     if (IsEmpty()) {
         ThrowError("Stack is empty!");
     }
-    Triple* triple = this->tail->triple;
+    Triple* triple = new Triple();
+    triple->x = this->tail->triple->x;
+    triple->y = this->tail->triple->y;
+    triple->elem = this->tail->triple->elem;
     this->tail = this->tail->prev;
     if (IsEmpty()) {
         delete this->head;

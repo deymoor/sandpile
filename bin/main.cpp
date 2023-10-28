@@ -2,7 +2,6 @@
 #include "libs/Classes/Arguments/Arguments.h"
 #include "libs/Parser/argparser.h"
 #include "libs/TsvReader/tsvreader.h"
-#include "libs/SaveBmp/SaveBmp.h"
 #include "libs/IterSandPile/itersandpile.h"
 #include <iostream>
 
@@ -31,7 +30,7 @@ void PrintSandPile(Field* field) {
     }
 }
 
-// разобраться с утечкой памяти на стеке и popback соответственно
+// обработка отрицательных чисел
 int main(int argc, char* argv[]) {
 	std::cout << "Hello from labwork3" << std::endl;
 	Arguments arguments;
@@ -40,8 +39,6 @@ int main(int argc, char* argv[]) {
     DoesItWork(arguments);
     ReadTsv(arguments.filename, field);
     IterSandPile(field, arguments);
-	// iterfunc -> savebmp
-    //arguments.Destructor();
     delete field;
 	return 0;
 }

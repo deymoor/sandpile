@@ -17,7 +17,7 @@ void FindBorders(Field* field, std::ifstream& input) {
 void InitSandPile(Field* field) {
     field->sand_pile = new uint64_t*[field->border_y];
     for (size_t i = 0; i < field->border_y; ++i) {
-        field->sand_pile[i] = new uint64_t[field->border_x];
+        field->sand_pile[i] = new uint64_t[field->border_x] {0};
     }
 }
 

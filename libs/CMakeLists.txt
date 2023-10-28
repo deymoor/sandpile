@@ -12,5 +12,5 @@ add_library(field
         Classes/Field/Field.cpp Classes/Field/Field.h)
 add_library(stack
         Classes/Stack/Stack.cpp Classes/Stack/Stack.h)
-add_library(savebmp
-        SaveBmp/SaveBmp.cpp SaveBmp/SaveBmp.h)
+add_library(bmp
+        Classes/Bmp/Bmp.cpp Classes/Bmp/Bmp.h)
