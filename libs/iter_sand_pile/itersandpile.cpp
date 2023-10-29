@@ -31,7 +31,7 @@ void FillStack(Field* field, Stack* stack, Expansion& expansion) {
             if (cnt_sand < 4) {
                 continue;
             }
-            Triple* triple = new Triple();
+            auto triple = new Triple();
             triple->y = i + expansion.exp_up;
             triple->x = j + expansion.exp_left;
             triple->elem = cnt_sand;
@@ -45,8 +45,8 @@ void Resize(Field* field, Expansion& expansion) {
     if (expansion.exp_left == 0 && expansion.exp_right == 0 && expansion.exp_up == 0 && expansion.exp_down == 0) {
         return;
     }
-    int16_t new_y_size = field->border_y + expansion.exp_down + expansion.exp_up;
-    int16_t new_x_size = field->border_x + expansion.exp_right + expansion.exp_left;
+    uint16_t new_y_size = field->border_y + expansion.exp_down + expansion.exp_up;
+    uint16_t new_x_size = field->border_x + expansion.exp_right + expansion.exp_left;
     auto temp_array = new uint64_t*[new_y_size];
     for (size_t i = 0; i < new_y_size; ++i) {
         temp_array[i] = new uint64_t[new_x_size] {0};
@@ -80,7 +80,6 @@ void ScatterSand(Field* field, Stack* stack) {
 
 void SaveBMP(Field* field, const char* dir, uint64_t name) {
     BMP bmp(field->border_x, field->border_y);
-    InitPalette(bmp.palette);
     char* filename = CreateFilename(dir, name);
     bmp.Write(filename, field);
     delete[] filename;
@@ -89,7 +88,7 @@ void SaveBMP(Field* field, const char* dir, uint64_t name) {
 // доделать
 void IterSandPile(Field* field, Arguments& arguments) {
     uint64_t temp_limit = arguments.limit;
-    uint64_t temp_freq = 0;
+    uint64_t temp_freq = arguments.freq;
     uint64_t bmp_filename = 1;
     while (temp_limit) {
         Expansion expansion;
@@ -101,14 +100,16 @@ void IterSandPile(Field* field, Arguments& arguments) {
         }
         Resize(field, expansion);
         ScatterSand(field, stack);
-        if (temp_freq == arguments.freq && temp_freq != 0) {
+        if (temp_freq == arguments.freq && arguments.freq != 0) {
             SaveBMP(field, arguments.dir, bmp_filename);
             temp_freq = 0;
-            bmp_filename++;
         }
         delete stack;
         temp_limit--;
         temp_freq++;
+        bmp_filename++;
     }
-    SaveBMP(field, arguments.dir, bmp_filename);
+    if (arguments.freq == 0 && arguments.limit != 0) {
+        SaveBMP(field, arguments.dir, bmp_filename);
+    }
 }

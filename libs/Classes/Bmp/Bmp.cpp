@@ -15,7 +15,7 @@ char* CreateFilename(const char* filename, uint64_t num){
     return new_filename;
 }
 
-void InitPalette(Color palette[count_of_colors]) {
+void BMP::InitPalette() {
     Color rgb;
     // white
     rgb.red = 255;
@@ -86,8 +86,9 @@ uint8_t BMP::DefineColor(uint64_t particles) {
 }
 
 void BMP::WriteImage(std::ofstream& output, Field* field) {
-    for (int32_t i = this->info_header.height - 1; i >= 0; --i) {
-        for (int32_t j = 0; j < this->info_header.width - 1; j += 2) {
+    uint8_t padding = 0x0;
+    for (size_t i = 0; i < this->info_header.height; ++i) {
+        for (size_t j = 0; j < this->info_header.width - 1; j += 2) {
             uint8_t byte = DefineColor(field->sand_pile[i][j]) * 16 + DefineColor(field->sand_pile[i][j + 1]);
             output.write(reinterpret_cast <const char*>(&byte), sizeof(uint8_t));
         }
@@ -95,9 +96,7 @@ void BMP::WriteImage(std::ofstream& output, Field* field) {
             uint8_t byte = field->sand_pile[i][field->border_x - 1] * 16;
             output.write(reinterpret_cast <const char *>(&byte), sizeof(uint8_t));
         }
-        uint8_t padding = 0x0;
-        int32_t count_of_padding_byte = (4 - ((this->info_header.width + this->info_header.width % 2) / 2 % 4)) % 4;
-        for (int32_t j = 0; j < count_of_padding_byte; ++j) {
+        for (size_t j = 0; j < this->count_of_padding_byte; ++j) {
             output.write(reinterpret_cast <const char *>(&padding), sizeof(uint8_t));
         }
     }

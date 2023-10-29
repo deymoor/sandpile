@@ -1,7 +1,7 @@
 #pragma once
 #include "../Classes/Arguments/Arguments.h"
+#include "../utils/utils.h"
 #include "checker.h"
-#include "../utils.h"
 #include <iostream>
 #include <cstring>
 

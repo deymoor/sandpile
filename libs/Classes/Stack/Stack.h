@@ -1,11 +1,11 @@
 #pragma once
-#include "../../utils.h"
+#include "../../utils/utils.h"
 #include <iostream>
 
 struct Triple {
     uint64_t elem = 0;
-    int16_t x = 0;
-    int16_t y = 0;
+    uint16_t x = 0;
+    uint16_t y = 0;
 };
 
 struct Node {
@@ -53,6 +53,4 @@ struct Stack {
     void PushBack(Triple* triple_temp);
 
     Triple* PopBack();
-
-    void PrintStack();
 };

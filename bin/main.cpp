@@ -1,8 +1,8 @@
 #include "libs/Classes/Field/Field.h"
 #include "libs/Classes/Arguments/Arguments.h"
-#include "libs/Parser/argparser.h"
-#include "libs/TsvReader/tsvreader.h"
-#include "libs/IterSandPile/itersandpile.h"
+#include "libs/parser/argparser.h"
+#include "libs/tsv_reader/tsvreader.h"
+#include "libs/iter_sand_pile/itersandpile.h"
 #include <iostream>
 
 

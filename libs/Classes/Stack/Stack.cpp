@@ -11,7 +11,7 @@ void Stack::PushEmpty(Node* node) {
 
 void Stack::PushBack(Triple* triple_temp) {
     Node* node = new Node();
-    Triple* triple = new Triple();
+    auto triple = new Triple();
     triple->x = triple_temp->x;
     triple->y = triple_temp->y;
     triple->elem = triple_temp->elem;
@@ -29,7 +29,7 @@ Triple* Stack::PopBack() {
     if (IsEmpty()) {
         ThrowError("Stack is empty!");
     }
-    Triple* triple = new Triple();
+    auto triple = new Triple();
     triple->x = this->tail->triple->x;
     triple->y = this->tail->triple->y;
     triple->elem = this->tail->triple->elem;
@@ -42,12 +42,4 @@ Triple* Stack::PopBack() {
     delete this->tail->next;
     this->tail->next = nullptr;
     return triple;
-}
-
-void Stack::PrintStack() {
-    Node* current = this->head;
-    while(current != nullptr) {
-        std::cout << current->triple->x + 1 << ' ' << current->triple->y + 1 << ' ' << current->triple->elem << '\n';
-        current = current->next;
-    }
 }
