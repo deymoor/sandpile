@@ -2,6 +2,7 @@
 #include "../../utils/utils.h"
 #include <iostream>
 
+
 struct Triple {
     uint64_t elem = 0;
     uint16_t x = 0;
@@ -9,15 +10,9 @@ struct Triple {
 };
 
 struct Node {
-    Triple* triple;
-    Node* next;
-    Node* prev;
-
-    Node() {
-        triple = nullptr;
-        next = nullptr;
-        prev = nullptr;
-    }
+    Triple* triple = nullptr;
+    Node* next = nullptr;
+    Node* prev = nullptr;
 
     ~Node() {
         delete this->triple;
@@ -25,13 +20,8 @@ struct Node {
 };
 
 struct Stack {
-    Node* head;
-    Node* tail;
-
-    Stack() {
-        head = nullptr;
-        tail = nullptr;
-    }
+    Node* head = nullptr;
+    Node* tail = nullptr;
 
     ~Stack() {
         while (!this->IsEmpty()) {

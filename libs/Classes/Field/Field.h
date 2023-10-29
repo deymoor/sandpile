@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <cstddef>
 
+
 struct Field {
     uint16_t border_x = 0;
     uint16_t border_y = 0;

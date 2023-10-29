@@ -2,23 +2,28 @@
 
 
 void DefineExpSides(Field* field, Expansion& expansion) {
+    for (size_t j = 0; j < field->border_x; ++j) {
+        if (field->sand_pile[0][j] >= 4) {
+            expansion.exp_up = 1;
+            break;
+        }
+    }
+    for (size_t j = 0; j < field->border_x; ++j) {
+        if (field->sand_pile[field->border_y - 1][j] >= 4) {
+            expansion.exp_down = 1;
+            break;
+        }
+    }
     for (size_t i = 0; i < field->border_y; ++i) {
-        for (size_t j = 0; j < field->border_x; ++j) {
-            if (field->sand_pile[i][j] < 4) {
-                continue;
-            }
-            if (i == 0) {
-                expansion.exp_up = 1;
-            }
-            if (i == field->border_y - 1) {
-                expansion.exp_down = 1;
-            }
-            if (j == 0) {
-                expansion.exp_left = 1;
-            }
-            if (j == field->border_x - 1) {
-                expansion.exp_right = 1;
-            }
+        if (field->sand_pile[i][0] >= 4) {
+            expansion.exp_left = 1;
+            break;
+        }
+    }
+    for (size_t i = 0; i < field->border_y; ++i) {
+        if (field->sand_pile[i][field->border_x - 1] >= 4) {
+            expansion.exp_right = 1;
+            break;
         }
     }
 }
@@ -65,7 +70,6 @@ void Resize(Field* field, Expansion& expansion) {
     field->border_x = new_x_size;
 }
 
-
 void ScatterSand(Field* field, Stack* stack) {
     while (stack->head != nullptr) {
         Triple* triple = stack->PopBack();
@@ -85,7 +89,6 @@ void SaveBMP(Field* field, const char* dir, uint64_t name) {
     delete[] filename;
 }
 
-// доделать
 void IterSandPile(Field* field, Arguments& arguments) {
     uint64_t temp_limit = arguments.limit;
     uint64_t temp_freq = arguments.freq;
@@ -100,11 +103,11 @@ void IterSandPile(Field* field, Arguments& arguments) {
         }
         Resize(field, expansion);
         ScatterSand(field, stack);
+        delete stack;
         if (temp_freq == arguments.freq && arguments.freq != 0) {
             SaveBMP(field, arguments.dir, bmp_filename);
             temp_freq = 0;
         }
-        delete stack;
         temp_limit--;
         temp_freq++;
         bmp_filename++;

@@ -1,5 +1,6 @@
 #include "Stack.h"
 
+
 bool Stack::IsEmpty() {
     return (this->head == nullptr || this->tail == nullptr);
 }
