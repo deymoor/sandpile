@@ -18,9 +18,9 @@ char* CreateFilename(const char* filename, uint64_t num){
 void InitPalette(Color palette[count_of_colors]) {
     Color rgb;
     // white
-    rgb.red = 0;
-    rgb.green = 0;
-    rgb.blue = 0;
+    rgb.red = 255;
+    rgb.green = 255;
+    rgb.blue = 255;
     palette[0] = rgb;
     // green
     rgb.red = 0;
@@ -67,9 +67,9 @@ void BMP::WriteInfoHeader(std::ofstream& output) {
 
 void BMP::WritePalette(std::ofstream& output) {
     for (size_t i = 0; i < count_of_colors; ++i) {
-        output.write(reinterpret_cast <const char*>(&this->palette[i].blue), sizeof(this->palette[i].red));
+        output.write(reinterpret_cast <const char*>(&this->palette[i].red), sizeof(this->palette[i].red));
         output.write(reinterpret_cast <const char*>(&this->palette[i].green), sizeof(this->palette[i].green));
-        output.write(reinterpret_cast <const char*>(&this->palette[i].red), sizeof(this->palette[i].blue));
+        output.write(reinterpret_cast <const char*>(&this->palette[i].blue), sizeof(this->palette[i].blue));
         output.write(reinterpret_cast <const char*>(&this->palette[i].reversed), sizeof(this->palette[i].reversed));
     }
 }
@@ -86,17 +86,19 @@ uint8_t BMP::DefineColor(uint64_t particles) {
 }
 
 void BMP::WriteImage(std::ofstream& output, Field* field) {
-    for (int32_t i = field->border_y - 1; i >= 0; --i) {
-        for (int32_t j = 0; j < field->border_x - 1; j += 2) {
-            uint8_t byte = DefineColor(field->sand_pile[i][j]) + field->sand_pile[i][j + 1] * 16;
+    for (int32_t i = this->info_header.height - 1; i >= 0; --i) {
+        for (int32_t j = 0; j < this->info_header.width - 1; j += 2) {
+            uint8_t byte = DefineColor(field->sand_pile[i][j]) * 16 + DefineColor(field->sand_pile[i][j + 1]);
             output.write(reinterpret_cast <const char*>(&byte), sizeof(uint8_t));
         }
-        if (field->border_x % 2 == 1) {
-            output.write(reinterpret_cast <const char *>(&field->sand_pile[i][field->border_x - 1]), sizeof(uint8_t));
+        if (this->info_header.width % 2 == 1) {
+            uint8_t byte = field->sand_pile[i][field->border_x - 1] * 16;
+            output.write(reinterpret_cast <const char *>(&byte), sizeof(uint8_t));
         }
-        uint8_t unit = 0x5;
-        for (int32_t j = 0; j < (field->border_x / 2) % 4; ++j) {
-            output.write(reinterpret_cast <const char*>(&unit), sizeof(unit));
+        uint8_t padding = 0x0;
+        int32_t count_of_padding_byte = (4 - ((this->info_header.width + this->info_header.width % 2) / 2 % 4)) % 4;
+        for (int32_t j = 0; j < count_of_padding_byte; ++j) {
+            output.write(reinterpret_cast <const char *>(&padding), sizeof(uint8_t));
         }
     }
 }
@@ -106,6 +108,5 @@ void BMP::Write(const char* dir, Field* field) {
     WriteFileHeader(output);
     WriteInfoHeader(output);
     WritePalette(output);
-    // не доделал, пока writeimage работает некорректно
     WriteImage(output, field);
 }

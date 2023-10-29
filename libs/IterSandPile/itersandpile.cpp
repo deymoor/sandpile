@@ -78,12 +78,20 @@ void ScatterSand(Field* field, Stack* stack) {
     }
 }
 
+void SaveBMP(Field* field, const char* dir, uint64_t name) {
+    BMP bmp(field->border_x, field->border_y);
+    InitPalette(bmp.palette);
+    char* filename = CreateFilename(dir, name);
+    bmp.Write(filename, field);
+    delete[] filename;
+}
+
 // доделать
 void IterSandPile(Field* field, Arguments& arguments) {
     uint64_t temp_limit = arguments.limit;
     uint64_t temp_freq = 0;
-    uint64_t temp_name = 1;
-    while (temp_name != 2) {
+    uint64_t bmp_filename = 1;
+    while (temp_limit) {
         Expansion expansion;
         DefineExpSides(field, expansion);
         auto stack = new Stack();
@@ -94,17 +102,13 @@ void IterSandPile(Field* field, Arguments& arguments) {
         Resize(field, expansion);
         ScatterSand(field, stack);
         if (temp_freq == arguments.freq && temp_freq != 0) {
-            BMP bmp(field->border_x, field->border_y);
-            InitPalette(bmp.palette);
-            char* dir = CreateFilename(arguments.dir, temp_name);
-            bmp.Write(dir, field);
-            delete[] dir;
+            SaveBMP(field, arguments.dir, bmp_filename);
             temp_freq = 0;
-            temp_name++;
+            bmp_filename++;
         }
         delete stack;
         temp_limit--;
         temp_freq++;
     }
-    //SaveBmp(field);
+    SaveBMP(field, arguments.dir, bmp_filename);
 }

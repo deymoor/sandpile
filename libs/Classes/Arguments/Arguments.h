@@ -29,8 +29,8 @@ struct Arguments {
     Arguments() {
         filename = nullptr;
         dir = nullptr;
-        limit = 0;
-        freq = 0;
+        limit = UINT64_MAX;
+        freq = UINT64_MAX;
     }
 
     ~Arguments() {
