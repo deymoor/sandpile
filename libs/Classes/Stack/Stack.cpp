@@ -17,8 +17,8 @@ void Stack::PushBack(Triple& triple) {
         PushEmpty(node);
         return;
     }
-    node->prev = tail;
-    tail->next = node;
+    node->next = tail;
+    tail->prev = node;
     tail = node;
 }
 
@@ -27,13 +27,13 @@ Triple Stack::PopBack() {
         ThrowError("Stack is empty!");
     }
     Triple triple = tail->triple;
-    tail = tail->prev;
+    tail = tail->next;
     if (IsEmpty()) {
         delete head;
         head = nullptr;
         return triple;
     }
-    delete tail->next;
-    tail->next = nullptr;
+    delete tail->prev;
+    tail->prev = nullptr;
     return triple;
 }
