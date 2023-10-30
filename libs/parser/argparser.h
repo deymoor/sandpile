@@ -15,4 +15,4 @@ void HandlerOutputCmd(Arguments& arguments, uint8_t& index_cmd, int argc, char* 
 
 void IdentifyCommands(Arguments &arguments, int argc, char* argv[]);
 
-void Parser(Arguments &arguments, int argc, char* argv[]);
+void GetArguments(Arguments &arguments, int argc, char* argv[]);

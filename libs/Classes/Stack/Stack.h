@@ -10,28 +10,34 @@ struct Triple {
 };
 
 struct Node {
-    Triple* triple = nullptr;
-    Node* next = nullptr;
-    Node* prev = nullptr;
+    Triple triple;
+    Node* next;
+    Node* prev;
 
-    ~Node() {
-        delete this->triple;
+    Node() {
+        next = nullptr;
+        prev = nullptr;
     }
 };
 
 struct Stack {
-    Node* head = nullptr;
-    Node* tail = nullptr;
+    Node* head;
+    Node* tail;
+
+    Stack() {
+        head = nullptr;
+        tail = nullptr;
+    }
 
     ~Stack() {
         while (!this->IsEmpty()) {
-            this->tail = this->tail->prev;
+            tail = tail->prev;
             if (IsEmpty()) {
-                delete this->head;
-                this->head = nullptr;
+                delete head;
+                head = nullptr;
             } else {
-                delete this->tail->next;
-                this->tail->next = nullptr;
+                delete tail->next;
+                tail->next = nullptr;
             }
         }
     }
@@ -40,7 +46,7 @@ struct Stack {
 
     void PushEmpty(Node* node);
 
-    void PushBack(Triple* triple_temp);
+    void PushBack(Triple& triple);
 
-    Triple* PopBack();
+    Triple PopBack();
 };

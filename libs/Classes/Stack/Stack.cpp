@@ -2,45 +2,38 @@
 
 
 bool Stack::IsEmpty() {
-    return (this->head == nullptr || this->tail == nullptr);
+    return (head == nullptr || tail == nullptr);
 }
 
 void Stack::PushEmpty(Node* node) {
-    this->head = node;
-    this->tail = node;
+    head = node;
+    tail = node;
 }
 
-void Stack::PushBack(Triple* triple_temp) {
+void Stack::PushBack(Triple& triple) {
     Node* node = new Node();
-    auto triple = new Triple();
-    triple->x = triple_temp->x;
-    triple->y = triple_temp->y;
-    triple->elem = triple_temp->elem;
     node->triple = triple;
     if (IsEmpty()) {
         PushEmpty(node);
         return;
     }
-    node->prev = this->tail;
-    this->tail->next = node;
-    this->tail = node;
+    node->prev = tail;
+    tail->next = node;
+    tail = node;
 }
 
-Triple* Stack::PopBack() {
+Triple Stack::PopBack() {
     if (IsEmpty()) {
         ThrowError("Stack is empty!");
     }
-    auto triple = new Triple();
-    triple->x = this->tail->triple->x;
-    triple->y = this->tail->triple->y;
-    triple->elem = this->tail->triple->elem;
-    this->tail = this->tail->prev;
+    Triple triple = tail->triple;
+    tail = tail->prev;
     if (IsEmpty()) {
-        delete this->head;
-        this->head = nullptr;
+        delete head;
+        head = nullptr;
         return triple;
     }
-    delete this->tail->next;
-    this->tail->next = nullptr;
+    delete tail->next;
+    tail->next = nullptr;
     return triple;
 }

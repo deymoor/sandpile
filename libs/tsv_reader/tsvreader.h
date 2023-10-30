@@ -9,10 +9,10 @@ struct Offset {
     uint16_t y = 0;
 };
 
-void FindBorders(Field* field, std::ifstream& input, Offset& offset);
+void FindBorders(Field& field, std::ifstream& input, Offset& offset);
 
 void FindOffsetOfCoordinate(std::ifstream& input, Offset& offset);
 
-void InitSandPile(Field* field);
+void InitSandPile(Field& field);
 
-void ReadTsv(const char* filename, Field* field);
+void ReadTsv(const char* filename, Field& field);
